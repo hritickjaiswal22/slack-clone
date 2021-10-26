@@ -1,0 +1,19 @@
+@import "../Helper/colors.module.scss";
+
+.btn {
+  width: 95%;
+  outline: none;
+  font-size: 2rem;
+  font-family: inherit;
+  padding: 1rem 0;
+  border: none;
+  border-radius: 3px;
+  font-weight: 700;
+  cursor: pointer;
+  margin: 2rem 0;
+
+  &--purple {
+    background-color: $purple;
+    color: $white;
+  }
+}

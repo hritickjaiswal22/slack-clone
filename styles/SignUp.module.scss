@@ -1,0 +1,24 @@
+@import "../Helper/colors.module.scss";
+@import "../Helper/mixins.module.scss";
+
+.main {
+  min-height: 100vh;
+  background-color: $white;
+  color: $black;
+  text-align: center;
+  padding-top: 5rem;
+}
+
+.mainHeading {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+}
+
+.subHeading {
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.strong {
+  font-weight: 500;
+}

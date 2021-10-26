@@ -1,0 +1,19 @@
+@import "../Helper/mixins.module.scss";
+
+.logoBox {
+  @include flexCenter();
+  max-width: 14rem;
+  cursor: pointer;
+  margin: 0 auto;
+
+  &__logoContainer {
+    position: relative;
+    width: 4rem;
+    height: 4rem;
+  }
+
+  &__titleBox {
+    padding: 0.3rem;
+    font-size: 2rem;
+  }
+}

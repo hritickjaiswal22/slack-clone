@@ -1,0 +1,29 @@
+@import "../Helper/colors.module.scss";
+
+.form {
+  max-width: 40rem;
+  width: 99%;
+  margin: 3rem auto;
+
+  &__input {
+    font-size: 2rem;
+    padding: 1rem;
+    width: 95%;
+    border: 1px solid rgba(29, 28, 29, 0.3);
+    border-radius: 5px;
+    outline: none;
+    margin-bottom: 2rem;
+  }
+
+  &__input.error {
+    border: 1px solid $form-red;
+  }
+
+  &__input.error:focus {
+    box-shadow: 0 0 0 5px $form-red-shadow;
+  }
+
+  &__input:focus {
+    box-shadow: 0 0 0 5px $form-blue;
+  }
+}
