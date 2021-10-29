@@ -5,7 +5,7 @@ import { getDatabase, ref, set, push } from "firebase/database";
 import Button from "./Button";
 import styles from "./Form.module.scss";
 
-function Form({ emailPlaceHolder, authenticate }) {
+function Form({ emailPlaceHolder, authenticate, signupForm }) {
   const auth = getAuth();
   const database = getDatabase();
 
@@ -81,10 +81,14 @@ function Form({ emailPlaceHolder, authenticate }) {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setLoadingState(true);
     if (checkEmail(email) === true && checkPassword(password) === true) {
+      setLoadingState(true);
       authenticate(auth, email, password)
-        .then((userCredentials) => saveUserInDB(userCredentials.user))
+        .then((userCredentials) =>
+          signupForm
+            ? saveUserInDB(userCredentials.user)
+            : setLoadingState(false)
+        )
         .catch((error) => console.log(error));
     } else {
       console.log("Fix submitHandler");
@@ -117,15 +121,19 @@ function Form({ emailPlaceHolder, authenticate }) {
           placeholder="password"
         />
       </div>
-      <div className={styles.form__inputContainer}>
-        <input
-          onChange={(e) => setUserName(e.target.value)}
-          value={userName}
-          type="text"
-          className={styles.form__input}
-          placeholder="username"
-        />
-      </div>
+      {signupForm ? (
+        <div className={styles.form__inputContainer}>
+          <input
+            onChange={(e) => setUserName(e.target.value)}
+            value={userName}
+            type="text"
+            className={styles.form__input}
+            placeholder="username"
+          />
+        </div>
+      ) : (
+        ""
+      )}
       <Button
         loading={loadingState}
         content="Continue"

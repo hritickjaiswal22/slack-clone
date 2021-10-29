@@ -1,0 +1,17 @@
+@import "./SignUp.module.scss";
+
+.main {
+  @extend .main;
+}
+
+.mainHeading {
+  @extend .mainHeading;
+}
+
+.subHeading {
+  @extend .subHeading;
+}
+
+.strong {
+  @extend .strong;
+}

@@ -1,15 +1,15 @@
 import React from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 import LogoBox from "../components/LogoBox";
 import Form from "../components/Form";
-import styles from "../styles/SignUp.module.scss";
+import styles from "../styles/SignIn.module.scss";
 
-function SignUp() {
+function SignIn() {
   return (
     <main className={styles.main}>
       <LogoBox />
-      <h1 className={styles.mainHeading}>Enter, your email and password</h1>
+      <h1 className={styles.mainHeading}>Sign in to Slack</h1>
       <h3 className={styles.subHeading}>
         We suggest using the{" "}
         <strong className={styles.strong}>
@@ -17,12 +17,12 @@ function SignUp() {
         </strong>
       </h3>
       <Form
-        authenticate={createUserWithEmailAndPassword}
+        authenticate={signInWithEmailAndPassword}
         emailPlaceHolder="name@work-email.com"
-        signupForm={true}
+        signupForm={false}
       />
     </main>
   );
 }
 
-export default SignUp;
+export default SignIn;
