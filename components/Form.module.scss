@@ -2,17 +2,41 @@
 
 .form {
   max-width: 40rem;
-  width: 99%;
+  width: 95%;
   margin: 3rem auto;
+
+  &__inputContainer {
+    margin-bottom: 2rem;
+  }
+
+  &__inputContainer.error::after {
+    content: "";
+    display: block;
+    width: 96%;
+    height: 2rem;
+    background-color: rgba(224, 30, 90, 0.1);
+    border: 1px solid rgba(224, 30, 90, 0.4);
+    border-radius: 2px 2px 5px 5px;
+    margin: 0 auto;
+    padding: 0.5rem 0.3rem;
+    font-size: 1.3rem;
+  }
+
+  &__emailInputContainer.error::after {
+    content: "Valid Email Required";
+  }
+
+  &__passwordInputContainer.error::after {
+    content: "Password must be greater than length 6";
+  }
 
   &__input {
     font-size: 2rem;
     padding: 1rem;
-    width: 95%;
+    width: 100%;
     border: 1px solid rgba(29, 28, 29, 0.3);
     border-radius: 5px;
     outline: none;
-    margin-bottom: 2rem;
   }
 
   &__input.error {

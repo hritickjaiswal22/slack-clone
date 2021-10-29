@@ -17,22 +17,50 @@ function Form({ emailPlaceHolder, authenticate }) {
 
   const [userName, setUserName] = useState("");
 
-  const checkEmail = () => {
-    const re =
-      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!re.test(email)) {
-      emailRef.current.classList.add(styles.error);
-      return false;
+  const [loadingState, setLoadingState] = useState(false);
+
+  const changeHandler = (current, parent, value) => {
+    if (!value) {
+      current.classList.add(styles.error);
+      parent.classList.add(styles.error);
+    } else {
+      current.classList.remove(styles.error);
+      parent.classList.remove(styles.error);
     }
-    return true;
   };
 
-  const checkPassword = () => {
-    if (password.length < 6) {
-      passwordRef.current.classList.add(styles.error);
-      return false;
-    }
-    return true;
+  const checkEmail = (value) => {
+    const regex =
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return regex.test(value) ? true : false;
+  };
+
+  const emailHandler = (e) => {
+    let value = e.target.value;
+    const { current } = emailRef;
+    const parent = current.parentElement;
+
+    !checkEmail(value)
+      ? changeHandler(current, parent, false)
+      : changeHandler(current, parent, true);
+
+    setEmail(value);
+  };
+
+  const checkPassword = (value) => {
+    return value.length < 6 ? false : true;
+  };
+
+  const passwordHandler = (e) => {
+    let value = e.target.value;
+    const { current } = passwordRef;
+    const parent = current.parentElement;
+
+    !checkPassword(value)
+      ? changeHandler(current, parent, false)
+      : changeHandler(current, parent, true);
+
+    setPassword(value);
   };
 
   const saveUserInDB = (user) => {
@@ -46,51 +74,63 @@ function Form({ emailPlaceHolder, authenticate }) {
         username: user.displayName,
         email: user.email,
       });
+      setLoadingState(false);
       console.log(user);
     });
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (checkEmail() === true && checkPassword() === true) {
+    setLoadingState(true);
+    if (checkEmail(email) === true && checkPassword(password) === true) {
       authenticate(auth, email, password)
         .then((userCredentials) => saveUserInDB(userCredentials.user))
         .catch((error) => console.log(error));
+    } else {
+      console.log("Fix submitHandler");
     }
   };
 
   return (
     <form onSubmit={submitHandler} className={styles.form}>
-      <input
-        onChange={(e) => {
-          emailRef.current.classList.remove(styles.error);
-          return setEmail(e.target.value);
-        }}
-        ref={emailRef}
-        value={email}
-        className={styles.form__input}
-        type="text"
-        placeholder={emailPlaceHolder}
+      <div
+        className={`${styles.form__inputContainer} ${styles.form__emailInputContainer}`}
+      >
+        <input
+          onChange={emailHandler}
+          ref={emailRef}
+          value={email}
+          className={styles.form__input}
+          type="email"
+          placeholder={emailPlaceHolder}
+        />
+      </div>
+      <div
+        className={`${styles.form__inputContainer} ${styles.form__passwordInputContainer}`}
+      >
+        <input
+          onChange={passwordHandler}
+          ref={passwordRef}
+          value={password}
+          type="password"
+          className={styles.form__input}
+          placeholder="password"
+        />
+      </div>
+      <div className={styles.form__inputContainer}>
+        <input
+          onChange={(e) => setUserName(e.target.value)}
+          value={userName}
+          type="text"
+          className={styles.form__input}
+          placeholder="username"
+        />
+      </div>
+      <Button
+        loading={loadingState}
+        content="Continue"
+        className="btn--purple"
       />
-      <input
-        onChange={(e) => {
-          passwordRef.current.classList.remove(styles.error);
-          return setPassword(e.target.value);
-        }}
-        ref={passwordRef}
-        value={password}
-        type="password"
-        className={styles.form__input}
-        placeholder="password"
-      />
-      <input
-        onChange={(e) => setUserName(e.target.value)}
-        value={userName}
-        type="text"
-        className={styles.form__input}
-        placeholder="username"
-      />
-      <Button content="Continue" className="btn--purple" />
     </form>
   );
 }
