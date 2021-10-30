@@ -4,6 +4,20 @@
   @extend .main;
 }
 
+.linkBox {
+  @extend .linkBox;
+
+  &__heading {
+    @extend .linkBox__heading;
+  }
+
+  a {
+    font-size: 1.5rem;
+    color: #1264a3;
+    font-weight: 600;
+  }
+}
+
 .mainHeading {
   @extend .mainHeading;
 }

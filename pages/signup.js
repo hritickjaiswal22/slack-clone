@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
 import LogoBox from "../components/LogoBox";
@@ -8,6 +9,12 @@ import styles from "../styles/SignUp.module.scss";
 function SignUp() {
   return (
     <main className={styles.main}>
+      <aside className={styles.linkBox}>
+        <p className={styles.linkBox__heading}>Already a member?</p>
+        <Link className={styles.linkBox__link} href="/signin">
+          Sign In
+        </Link>
+      </aside>
       <LogoBox />
       <h1 className={styles.mainHeading}>Enter, your email and password</h1>
       <h3 className={styles.subHeading}>

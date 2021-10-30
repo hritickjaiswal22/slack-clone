@@ -9,6 +9,23 @@
   padding-top: 5rem;
 }
 
+.linkBox {
+  position: fixed;
+  text-align: start;
+  right: 2rem;
+  top: 2rem;
+
+  &__heading {
+    font-size: 1.3rem;
+  }
+
+  a {
+    font-size: 1.5rem;
+    color: #1264a3;
+    font-weight: 600;
+  }
+}
+
 .mainHeading {
   font-size: 4rem;
   margin-bottom: 1.5rem;
