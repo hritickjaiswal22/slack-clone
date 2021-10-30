@@ -1,17 +1,24 @@
 import React from "react";
 import Link from "next/link";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 import LogoBox from "../components/LogoBox";
 import Form from "../components/Form";
 import styles from "../styles/SignIn.module.scss";
 
 function SignIn() {
+  const userState = useSelector((state) => state.authState);
+  const router = useRouter();
+
+  userState.userName === null ? "" : router.push("/");
+
   return (
     <main className={styles.main}>
       <aside className={styles.linkBox}>
         <p className={styles.linkBox__heading}>New to Slack?</p>
-        <Link className={styles.linkBox__link} href="/signin">
+        <Link className={styles.linkBox__link} href="/signup">
           Create an account
         </Link>
       </aside>

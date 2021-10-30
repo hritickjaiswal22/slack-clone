@@ -1,12 +1,19 @@
 import React from "react";
 import Link from "next/link";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 import LogoBox from "../components/LogoBox";
 import Form from "../components/Form";
 import styles from "../styles/SignUp.module.scss";
 
 function SignUp() {
+  const userState = useSelector((state) => state.authState);
+  const router = useRouter();
+
+  userState.userName === null ? "" : router.push("/");
+
   return (
     <main className={styles.main}>
       <aside className={styles.linkBox}>

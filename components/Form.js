@@ -1,13 +1,16 @@
 import React, { useRef, useState } from "react";
 import { getAuth, updateProfile } from "firebase/auth";
 import { getDatabase, ref, set, push } from "firebase/database";
+import { useDispatch } from "react-redux";
 
 import Button from "./Button";
+import { saveUser, saveUserName } from "../slices/userSlice";
 import styles from "./Form.module.scss";
 
 function Form({ emailPlaceHolder, authenticate, signupForm }) {
   const auth = getAuth();
   const database = getDatabase();
+  const dispatch = useDispatch();
 
   const [email, setEmail] = useState("");
   const emailRef = useRef();
@@ -67,7 +70,6 @@ function Form({ emailPlaceHolder, authenticate, signupForm }) {
     updateProfile(auth.currentUser, {
       displayName: userName,
     }).then(() => {
-      console.log("Created user");
       const userCollectionRef = ref(database, "users");
       const newUserRef = push(userCollectionRef);
       set(newUserRef, {
@@ -75,7 +77,8 @@ function Form({ emailPlaceHolder, authenticate, signupForm }) {
         email: user.email,
       });
       setLoadingState(false);
-      console.log(user);
+      dispatch(saveUserName(user.displayName));
+      dispatch(saveUser(user.accessToken));
     });
   };
 
@@ -84,11 +87,15 @@ function Form({ emailPlaceHolder, authenticate, signupForm }) {
     if (checkEmail(email) === true && checkPassword(password) === true) {
       setLoadingState(true);
       authenticate(auth, email, password)
-        .then((userCredentials) =>
-          signupForm
-            ? saveUserInDB(userCredentials.user)
-            : setLoadingState(false)
-        )
+        .then((userCredentials) => {
+          if (signupForm) {
+            saveUserInDB(userCredentials.user);
+          } else {
+            setLoadingState(false);
+            dispatch(saveUserName(userCredentials.user.displayName));
+            dispatch(saveUser(userCredentials.user.accessToken));
+          }
+        })
         .catch((error) => console.log(error));
     } else {
       console.log("Fix submitHandler");
