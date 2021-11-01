@@ -1,0 +1,32 @@
+@import "../Helper/colors.module.scss";
+@import "../Helper/mixins.module.scss";
+
+.header {
+  background-color: $purple;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: $white;
+}
+
+.userAvatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: blueviolet;
+  @include flexCenter();
+  font-size: 2rem;
+  margin-right: 1rem;
+}
+
+.signOutText {
+  font-weight: 300;
+  cursor: pointer;
+  width: 8rem;
+  margin-left: 1rem;
+
+  &:hover {
+    font-weight: 500;
+  }
+}

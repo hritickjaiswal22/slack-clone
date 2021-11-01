@@ -1,7 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, Fragment } from "react";
 import { getAuth, updateProfile } from "firebase/auth";
 import { getDatabase, ref, set, push } from "firebase/database";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 
 import Button from "./Button";
 import { saveUser, saveUserName } from "../slices/userSlice";
@@ -11,6 +12,9 @@ function Form({ emailPlaceHolder, authenticate, signupForm }) {
   const auth = getAuth();
   const database = getDatabase();
   const dispatch = useDispatch();
+  const router = useRouter();
+
+  const errorBoxRef = useRef();
 
   const [email, setEmail] = useState("");
   const emailRef = useRef();
@@ -79,6 +83,7 @@ function Form({ emailPlaceHolder, authenticate, signupForm }) {
       setLoadingState(false);
       dispatch(saveUserName(user.displayName));
       dispatch(saveUser(user.accessToken));
+      router.push("/");
     });
   };
 
@@ -94,59 +99,68 @@ function Form({ emailPlaceHolder, authenticate, signupForm }) {
             setLoadingState(false);
             dispatch(saveUserName(userCredentials.user.displayName));
             dispatch(saveUser(userCredentials.user.accessToken));
+            router.push("/");
           }
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          setLoadingState(false);
+          errorBoxRef.current.innerText = error.message;
+          errorBoxRef.current.classList.add(styles.visible);
+        });
     } else {
-      console.log("Fix submitHandler");
+      errorBoxRef.current.innerText = "Provide proper details";
+      errorBoxRef.current.classList.add(styles.visible);
     }
   };
 
   return (
-    <form onSubmit={submitHandler} className={styles.form}>
-      <div
-        className={`${styles.form__inputContainer} ${styles.form__emailInputContainer}`}
-      >
-        <input
-          onChange={emailHandler}
-          ref={emailRef}
-          value={email}
-          className={styles.form__input}
-          type="email"
-          placeholder={emailPlaceHolder}
-        />
-      </div>
-      <div
-        className={`${styles.form__inputContainer} ${styles.form__passwordInputContainer}`}
-      >
-        <input
-          onChange={passwordHandler}
-          ref={passwordRef}
-          value={password}
-          type="password"
-          className={styles.form__input}
-          placeholder="password"
-        />
-      </div>
-      {signupForm ? (
-        <div className={styles.form__inputContainer}>
+    <Fragment>
+      <form onSubmit={submitHandler} className={styles.form}>
+        <div
+          className={`${styles.form__inputContainer} ${styles.form__emailInputContainer}`}
+        >
           <input
-            onChange={(e) => setUserName(e.target.value)}
-            value={userName}
-            type="text"
+            onChange={emailHandler}
+            ref={emailRef}
+            value={email}
             className={styles.form__input}
-            placeholder="username"
+            type="email"
+            placeholder={emailPlaceHolder}
           />
         </div>
-      ) : (
-        ""
-      )}
-      <Button
-        loading={loadingState}
-        content="Continue"
-        className="btn--purple"
-      />
-    </form>
+        <div
+          className={`${styles.form__inputContainer} ${styles.form__passwordInputContainer}`}
+        >
+          <input
+            onChange={passwordHandler}
+            ref={passwordRef}
+            value={password}
+            type="password"
+            className={styles.form__input}
+            placeholder="password"
+          />
+        </div>
+        {signupForm ? (
+          <div className={styles.form__inputContainer}>
+            <input
+              onChange={(e) => setUserName(e.target.value)}
+              value={userName}
+              type="text"
+              className={styles.form__input}
+              placeholder="username"
+            />
+          </div>
+        ) : (
+          ""
+        )}
+        <Button
+          loading={loadingState}
+          content="Continue"
+          className="btn--purple"
+        />
+      </form>
+      <div ref={errorBoxRef} className={styles.errorBox}></div>
+    </Fragment>
   );
 }
 
