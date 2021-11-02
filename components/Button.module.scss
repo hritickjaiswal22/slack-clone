@@ -16,6 +16,19 @@
     background-color: $purple;
     color: $white;
   }
+
+  &__small {
+    width: 7rem;
+    font-size: 1.5rem;
+    background-color: darkgreen;
+    color: white;
+    cursor: pointer;
+    margin: 0 1rem;
+  }
+
+  &__small:hover {
+    background-color: limegreen;
+  }
 }
 
 .loader {

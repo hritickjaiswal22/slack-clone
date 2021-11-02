@@ -1,0 +1,52 @@
+@import "../Helper/mixins.module.scss";
+@import "./Form.module.scss";
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  @include flexCenter();
+  pointer-events: none;
+  opacity: 0;
+}
+
+.modal.showModal {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modalContent {
+  max-width: 40rem;
+  width: 90%;
+  color: black;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 1rem;
+
+  &__title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  &__description {
+    font-size: 1.3rem;
+    color: gray;
+    margin-bottom: 1rem;
+  }
+
+  &__inputLabel {
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  &__input {
+    @extend .form__input;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+}

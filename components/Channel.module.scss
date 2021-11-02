@@ -1,0 +1,24 @@
+.channels {
+  &__headingBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__heading {
+    font-size: 1.5rem;
+  }
+
+  &__add {
+    font-size: 2rem;
+    cursor: pointer;
+  }
+
+  &__listItem {
+    padding-left: 2rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: fit-content;
+    margin: 0.5rem 0;
+  }
+}

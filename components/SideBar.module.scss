@@ -1,0 +1,10 @@
+@import "../Helper/colors.module.scss";
+
+.sideBar {
+  width: 25rem;
+  padding: 1rem;
+  height: calc(100vh - 5rem);
+  background-color: $purple;
+  box-shadow: 0px -0.1px;
+  color: #fff;
+}
