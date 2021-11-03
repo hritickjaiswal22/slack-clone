@@ -1,0 +1,11 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 2px solid lightgray;
+
+  &__details {
+    font-weight: 400;
+    cursor: pointer;
+  }
+}
