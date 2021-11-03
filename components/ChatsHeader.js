@@ -5,9 +5,7 @@ import { selectChannel } from "../slices/selectedChannelSlice";
 import styles from "./ChatsHeader.module.scss";
 
 function ChatsHeader() {
-  const { selectedChannel, selectedChannelId } = useSelector(
-    (state) => state.channelState
-  );
+  const { selectedChannel } = useSelector((state) => state.channelState);
 
   return (
     <header className={styles.header}>

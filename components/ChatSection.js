@@ -1,13 +1,14 @@
 import React from "react";
 
 import ChatsHeader from "./ChatsHeader";
+import MessageSection from "./MessageSection";
 import styles from "./ChatSection.module.scss";
 
 function ChatSection() {
   return (
     <section className={styles.chatSection}>
       <ChatsHeader />
-      <h1>ChatSection</h1>
+      <MessageSection />
     </section>
   );
 }
