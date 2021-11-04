@@ -3,6 +3,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 
+import UserAvatar from "./UserAvatar";
 import { saveUser, saveUserName } from "../slices/userSlice";
 import styles from "./Header.module.scss";
 
@@ -24,9 +25,7 @@ function Header() {
 
   return (
     <header className={styles.header}>
-      <div className={styles.userAvatar}>
-        {userName !== null ? userName[0] : ""}
-      </div>
+      <UserAvatar userName={userName} />
       <h1 onClick={signOutHandler} className={styles.signOutText}>
         Sign Out
       </h1>

@@ -41,7 +41,7 @@ function MessageInput() {
         onChange={(e) => setMessage(e.target.value)}
         value={message}
         type="text"
-        placeholder={`message ${selectedChannel}`}
+        placeholder={`message #${selectedChannel}`}
       />
       <button onClick={submitHandler} className={styles.inputContainer__btn}>
         &#10149;
