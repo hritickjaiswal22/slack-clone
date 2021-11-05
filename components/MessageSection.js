@@ -13,7 +13,6 @@ function MessageSection() {
   const database = getDatabase();
 
   useEffect(() => {
-    console.log("Inside useEffect");
     const messagesRef = ref(database, `messages/${selectedChannelId}`);
     onValue(messagesRef, (snap) => {
       setMessages(snap.val());
