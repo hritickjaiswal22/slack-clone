@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 
 import Button from "./Button";
-import { saveUser, saveUserName, saveUserId } from "../slices/userSlice";
+import { saveUser, saveUserName } from "../slices/userSlice";
 import styles from "./Form.module.scss";
 
 function Form({ emailPlaceHolder, authenticate, signupForm }) {
@@ -83,7 +83,6 @@ function Form({ emailPlaceHolder, authenticate, signupForm }) {
       setLoadingState(false);
       dispatch(saveUserName(user.displayName));
       dispatch(saveUser(user.email));
-      dispatch(saveUserId(user.uid));
       router.push("/");
     });
   };
@@ -97,10 +96,10 @@ function Form({ emailPlaceHolder, authenticate, signupForm }) {
           if (signupForm) {
             saveUserInDB(userCredentials.user);
           } else {
+            console.log(userCredentials.user);
             setLoadingState(false);
             dispatch(saveUserName(userCredentials.user.displayName));
             dispatch(saveUser(userCredentials.user.email));
-            dispatch(saveUserId(userCredentials.user.uid));
             router.push("/");
           }
         })

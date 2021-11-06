@@ -1,0 +1,12 @@
+@import "./Channel.module.scss";
+
+.users {
+  &__heading {
+    @extend .channels__heading;
+    margin: 1rem;
+  }
+
+  &__listItem {
+    @extend .channels__listItem;
+  }
+}

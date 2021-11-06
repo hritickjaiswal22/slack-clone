@@ -14,14 +14,22 @@ function MessageInput() {
   const { selectedChannel, selectedChannelId } = useSelector(
     (state) => state.channelState
   );
-  const { userName } = useSelector((state) => state.authState);
+  const { selectedUserName, selectedUserId } = useSelector(
+    (state) => state.usersState
+  );
+  const { userName, userEmail } = useSelector((state) => state.authState);
 
   const [message, setMessage] = useState("");
 
   const database = getDatabase();
 
   const submitHandler = () => {
-    const messagesRef = ref(database, `messages/${selectedChannelId}`);
+    const path = selectedChannelId
+      ? `messages/${selectedChannelId}`
+      : `messages/${userEmail.split(".")[0]}/${selectedUserId}`;
+    const path2 = `messages/${selectedUserId}/${userEmail.split(".")[0]}`;
+
+    const messagesRef = ref(database, path);
     const newMessageRef = push(messagesRef);
 
     set(newMessageRef, {
@@ -31,6 +39,20 @@ function MessageInput() {
       content: message,
       timestamp: serverTimestamp(),
     });
+
+    if (!selectedChannelId) {
+      const messagesRef2 = ref(database, path2);
+      const newMessageRef2 = push(messagesRef2);
+
+      set(newMessageRef2, {
+        user: {
+          name: userName,
+        },
+        content: message,
+        timestamp: serverTimestamp(),
+      });
+    }
+
     setMessage("");
   };
 
@@ -41,7 +63,11 @@ function MessageInput() {
         onChange={(e) => setMessage(e.target.value)}
         value={message}
         type="text"
-        placeholder={`message #${selectedChannel}`}
+        placeholder={
+          selectedChannelId
+            ? `message #${selectedChannel}`
+            : `message @${selectedUserName}`
+        }
       />
       <button onClick={submitHandler} className={styles.inputContainer__btn}>
         &#10149;

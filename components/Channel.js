@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { ref, onValue, getDatabase } from "firebase/database";
 import { useDispatch } from "react-redux";
 
 import { selectChannel } from "../slices/selectedChannelSlice";
+import { selectUser } from "../slices/selectedUserSlice";
 import InputModal from "./InputModal";
 import styles from "./Channel.module.scss";
 
 function Channel() {
   const [showModal, setShowModal] = useState(false);
   const [channels, setChannels] = useState([]);
-  const selectedChannelRef = useRef({ selectedChannel: null });
   const dispatch = useDispatch();
 
   const database = getDatabase();
@@ -20,17 +20,16 @@ function Channel() {
   };
 
   const channelSelectHandler = (e) => {
-    if (selectedChannelRef.current.selectedChannel !== null) {
-      selectedChannelRef.current.selectedChannel.classList.remove(
-        styles.selected
-      );
-    }
-    selectedChannelRef.current.selectedChannel = e.target;
-    e.target.classList.add(styles.selected);
     dispatch(
       selectChannel({
         channelName: e.target.dataset.channelname,
         id: e.target.dataset.channelid,
+      })
+    );
+    dispatch(
+      selectUser({
+        userName: null,
+        id: null,
       })
     );
   };

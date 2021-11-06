@@ -8,16 +8,24 @@ import styles from "./MessageSection.module.scss";
 
 function MessageSection() {
   const { selectedChannelId } = useSelector((state) => state.channelState);
+  const { userEmail } = useSelector((state) => state.authState);
+  const { selectedUserId } = useSelector((state) => state.usersState);
   const [messages, setMessages] = useState({});
 
   const database = getDatabase();
 
   useEffect(() => {
-    const messagesRef = ref(database, `messages/${selectedChannelId}`);
+    const path = selectedChannelId
+      ? `messages/${selectedChannelId}`
+      : `messages/${userEmail.split(".")[0]}/${selectedUserId}`;
+    console.log(path);
+    const messagesRef = ref(database, path);
     onValue(messagesRef, (snap) => {
       setMessages(snap.val());
     });
-  }, [selectedChannelId]);
+  }, [selectedChannelId, selectedUserId]);
+
+  console.log(messages);
 
   const displayMessages = () => {
     if (
