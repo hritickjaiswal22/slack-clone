@@ -96,7 +96,6 @@ function Form({ emailPlaceHolder, authenticate, signupForm }) {
           if (signupForm) {
             saveUserInDB(userCredentials.user);
           } else {
-            console.log(userCredentials.user);
             setLoadingState(false);
             dispatch(saveUserName(userCredentials.user.displayName));
             dispatch(saveUser(userCredentials.user.email));

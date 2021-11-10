@@ -1,0 +1,25 @@
+@import "./InputModal.module.scss";
+@import "./Button.module.scss";
+
+.modal {
+  @extend .modal;
+}
+
+.modalContent {
+  @extend .modalContent;
+
+  &__title {
+    @extend .modalContent__title;
+  }
+
+  &__fileInput {
+    display: none;
+  }
+
+  &__fileInputLabel {
+    @extend .btn;
+    @extend .btn--purple;
+    display: block;
+    padding: 1rem;
+  }
+}

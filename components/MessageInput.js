@@ -8,6 +8,7 @@ import {
   serverTimestamp,
 } from "firebase/database";
 
+import FileInputModal from "./FileInputModal";
 import styles from "./MessageInput.module.scss";
 
 function MessageInput() {
@@ -20,10 +21,12 @@ function MessageInput() {
   const { userName, userEmail } = useSelector((state) => state.authState);
 
   const [message, setMessage] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   const database = getDatabase();
 
   const submitHandler = () => {
+    if (message.length === 0) return;
     const path = selectedChannelId
       ? `messages/${selectedChannelId}`
       : `messages/${userEmail.split(".")[0]}/${selectedUserId}`;
@@ -58,6 +61,7 @@ function MessageInput() {
 
   return (
     <div className={styles.inputContainer}>
+      <FileInputModal showModal={showModal} setShowModal={setShowModal} />
       <input
         className={styles.inputContainer__input}
         onChange={(e) => setMessage(e.target.value)}
@@ -70,6 +74,12 @@ function MessageInput() {
         }
       />
       <button onClick={submitHandler} className={styles.inputContainer__btn}>
+        &#10149;
+      </button>
+      <button
+        onClick={() => setShowModal(true)}
+        className={`${styles.inputContainer__btn} ${styles.rotatedBtn}`}
+      >
         &#10149;
       </button>
     </div>

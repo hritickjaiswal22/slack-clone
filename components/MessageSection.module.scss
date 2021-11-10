@@ -11,6 +11,11 @@
   color: white;
   align-items: center;
 
+  &__contentBox {
+    position: relative;
+    flex: 1;
+  }
+
   &__user {
     font-size: 1.5rem;
     font-weight: 700;

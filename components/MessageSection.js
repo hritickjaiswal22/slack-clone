@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ref, onValue, getDatabase } from "firebase/database";
+import Image from "next/image";
 
 import MessageInput from "./MessageInput";
 import UserAvatar from "./UserAvatar";
@@ -18,14 +19,11 @@ function MessageSection() {
     const path = selectedChannelId
       ? `messages/${selectedChannelId}`
       : `messages/${userEmail.split(".")[0]}/${selectedUserId}`;
-    console.log(path);
     const messagesRef = ref(database, path);
     onValue(messagesRef, (snap) => {
       setMessages(snap.val());
     });
   }, [selectedChannelId, selectedUserId]);
-
-  console.log(messages);
 
   const displayMessages = () => {
     if (
@@ -35,18 +33,21 @@ function MessageSection() {
     ) {
       return;
     } else {
-      return Object.values(messages).map(({ content, user, timestamp }) => (
-        <div key={timestamp} className={styles.message}>
-          <UserAvatar userName={user.name} />
-          <div>
-            <span className={styles.message__user}>{user.name}</span>
-            <span className={styles.message__timestamp}>
-              {new Date(timestamp).toUTCString()}
-            </span>
-            <p className={styles.message__content}>{content}</p>
+      return Object.values(messages).map(
+        ({ content, user, timestamp, image }) => (
+          <div key={timestamp} className={styles.message}>
+            <UserAvatar userName={user.name} />
+            <div className={styles.message__contentBox}>
+              <span className={styles.message__user}>{user.name}</span>
+              <span className={styles.message__timestamp}>
+                {new Date(timestamp).toUTCString()}
+              </span>
+              <p className={styles.message__content}>{content}</p>
+              {image ? <Image src={image} width="600" height="200" /> : ""}
+            </div>
           </div>
-        </div>
-      ));
+        )
+      );
     }
   };
 
