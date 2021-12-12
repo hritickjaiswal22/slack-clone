@@ -53,6 +53,14 @@ function MessageSection() {
 
   return (
     <div className={styles.messageSection}>
+      {selectedChannelId === null && selectedUserId === null ? (
+        <h1 className={styles.messageSection__extra}>
+          In this section you can message yourself, but remember you'll have to
+          provide for both sides of the conversation
+        </h1>
+      ) : (
+        ""
+      )}
       {displayMessages()}
       <MessageInput />
     </div>

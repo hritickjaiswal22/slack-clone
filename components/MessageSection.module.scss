@@ -2,6 +2,11 @@
   position: relative;
   min-height: calc(100vh - 9.2rem);
   padding-bottom: 8.5rem;
+
+  &__extra {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
 }
 
 .message {

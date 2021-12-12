@@ -68,7 +68,9 @@ function MessageInput() {
         value={message}
         type="text"
         placeholder={
-          selectedChannelId
+          selectedChannelId === null && selectedUserId === null
+            ? `message Yourself`
+            : selectedChannelId
             ? `message #${selectedChannel}`
             : `message @${selectedUserName}`
         }
