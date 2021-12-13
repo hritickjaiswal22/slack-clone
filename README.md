@@ -1,4 +1,4 @@
-# Amazon Clone
+# Slack Clone
 
 A slack clone built using NextJS and ReactJS with the realtime messaging feature.You can create public communities or chat with other users in real time with firebase authentication.
 
